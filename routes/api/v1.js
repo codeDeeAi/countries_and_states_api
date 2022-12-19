@@ -83,4 +83,8 @@ router.get(`${PREFIX}countries`, (req, res) => {
 })
 
 
+router.all('*', function(req, res) {
+    res.json({ "error": "Resource not found" }).status(404);
+});
+
 module.exports = router;
