@@ -36,6 +36,49 @@ router.get(`${PREFIX}countries`, (req, res) => {
             }
         });
     }
+
+    if (req.query.select) {
+        let selectedCountries = req.query.select.split(",").map(element => {
+            return element.toLowerCase();
+        });
+
+        output = output.filter((country) => {
+            return (country.name && selectedCountries.includes(country.name.toLowerCase())) ||
+                (country.phoneCode && selectedCountries.includes(country.phoneCode.toLowerCase())) ||
+                (country.iso && selectedCountries.includes(country.iso.toLowerCase()));
+        });
+    }
+
+    if (req.query.excludeByISO) {
+        let excludedCountries = req.query.excludeByISO.split(",").map(element => {
+            return element.toLowerCase();
+        });
+
+        output = output.filter((country) => {
+            return (country.iso && !excludedCountries.includes(country.iso.toLowerCase()));
+        });
+    }
+
+    if (req.query.excludeByName) {
+        let excludedCountries = req.query.excludeByName.split(",").map(element => {
+            return element.toLowerCase();
+        });
+
+        output = output.filter((country) => {
+            return (country.name && !excludedCountries.includes(country.name.toLowerCase()));
+        });
+    }
+
+    if (req.query.excludeByPhoneCode) {
+        let excludedCountries = req.query.excludeByPhoneCode.split(",").map(element => {
+            return element.toLowerCase();
+        });
+
+        output = output.filter((country) => {
+            return (country.phoneCode && !excludedCountries.includes(country.phoneCode.toLowerCase()));
+        });
+    }
+
     res.json(output).status(200);
 })
 
