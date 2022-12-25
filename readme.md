@@ -18,9 +18,9 @@ This is an API application created with Node js and Express Js, it displays all 
 - Run ``npm run dev``
 
 ## Usage 
-
-   Will be updated soon  
-
+ 
+For API documentation and Usage, click link [https://documenter.getpostman.com/view/15372560/2s8Z6vZEQx](https://documenter.getpostman.com/view/15372560/2s8Z6vZEQx)
+   
 
 ## Author
 
