@@ -3,6 +3,7 @@ const router = express.Router();
 const PREFIX = '/api/v1/';
 let allCountries = require('../../data/all.js');
 const allowedCountryColumns = ['name', 'phoneCode', 'iso'];
+const sortByDirection = require('../../config/sort');
 
 /**
  * Builds a return object from a map function 
@@ -77,6 +78,14 @@ router.get(`${PREFIX}countries`, (req, res) => {
         output = output.filter((country) => {
             return (country.phoneCode && !excludedCountries.includes(country.phoneCode.toLowerCase()));
         });
+    }
+
+    if (req.query.sort && ['asc', 'desc'].includes(req.query.sort.toLowerCase())) {
+        if (output.length > 0) {
+            if (output[0].hasOwnProperty('name')) {
+                output = sortByDirection('name', req.query.sort.toLowerCase(), output);
+            }
+        }
     }
 
     res.json(output).status(200);
