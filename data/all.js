@@ -3746,8 +3746,14 @@ const states = data.map((item) => {
  * @returns Array
  */
 const findStates = (search) => {
-    return data.filter((item) => {
+    let output = data.filter((item) => {
         return (item.name.toLowerCase() === search.toLowerCase()) || (item.iso.toLowerCase() === search.toLowerCase());
     });
+
+    output = output.map((item) => {
+        return item.states;
+    });
+
+    return (output.length > 0) ? output[0] : [];
 };
 module.exports = { countries, states, findStates };
