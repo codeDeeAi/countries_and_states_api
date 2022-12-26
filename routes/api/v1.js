@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const PREFIX = '/api/v1/';
-let allCountries = require('../../data/all.js');
+const { countries, states, findStates } = require('../../data/all.js');
 const allowedCountryColumns = ['name', 'phoneCode', 'iso'];
 const sortByDirection = require('../../config/sort');
 
@@ -22,7 +22,7 @@ const buildReturnObject = (collection, columnNames) => {
 }
 
 router.get(`${PREFIX}countries`, (req, res) => {
-    let output = allCountries;
+    let output = countries;
     if (req.query.columns) {
         let selectedColumns = [];
         req.query.columns.split(",").forEach(column => {
@@ -31,7 +31,7 @@ router.get(`${PREFIX}countries`, (req, res) => {
             }
         });
 
-        output = allCountries.map((country) => {
+        output = countries.map((country) => {
             return {
                 ...buildReturnObject(country, selectedColumns)
             }
